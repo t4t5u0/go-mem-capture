@@ -35,7 +35,7 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
-		fileName := "image/" + time.Now().Format("2006-01-02_15:04:05") + ".png"
+		fileName := "image/" + time.Now().Format("2006-01-02-15:04:05-000") + ".png"
 		save(img, fileName)
 		fmt.Printf("#%d : %v \"%s\"\n", i, bounds, fileName)
 	}
@@ -45,6 +45,6 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	fileName := "image/" + time.Now().Format("2006-01-02_15:04") + ".png"
+	fileName := "image/" + time.Now().Format("2006-01-02-15:04:05-000") + ".png"
 	save(img, fileName)
 }
