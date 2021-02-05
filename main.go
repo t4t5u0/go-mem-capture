@@ -45,6 +45,6 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	fileName := time.Now().Format("2006-01-02_15:04")
+	fileName := time.Now().Format("2006-01-02_15:04") + ".png"
 	save(img, fileName)
 }
