@@ -1,50 +1,32 @@
 package main
 
 import (
-	"fmt"
-	"image"
-	"image/png"
-	"os"
-	"time"
+	"log"
 
-	"github.com/kbinani/screenshot"
+	"github.com/robotn/xgb/xproto"
+	"github.com/robotn/xgbutil"
+	"github.com/robotn/xgbutil/xevent"
+	"github.com/robotn/xgbutil/xgraphics"
 )
 
-func save(img *image.RGBA, filePath string) {
-	file, err := os.Create(filePath)
-	if err != nil {
-		panic(err)
-	}
-	defer file.Close()
-	png.Encode(file, img)
-}
-
 func main() {
-	n := screenshot.NumActiveDisplays()
-	if n <= 0 {
-		panic("Active display not found")
-	}
-
-	var all image.Rectangle = image.Rect(0, 0, 0, 0)
-
-	for i := 0; i < n; i++ {
-		bounds := screenshot.GetDisplayBounds(i)
-		all = bounds.Union(all)
-
-		img, err := screenshot.CaptureRect(bounds)
-		if err != nil {
-			panic(err)
-		}
-		fileName := "image/" + time.Now().Format("2006-01-02-15:04:05-000") + ".png"
-		save(img, fileName)
-		fmt.Printf("#%d : %v \"%s\"\n", i, bounds, fileName)
-	}
-
-	fmt.Printf("%v\n", all)
-	img, err := screenshot.Capture(all.Min.X, all.Min.Y, all.Dx(), all.Dy())
+	X, err := xgbutil.NewConnDisplay(":0")
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
-	fileName := "image/" + time.Now().Format("2006-01-02-15:04:05-000") + ".png"
-	save(img, fileName)
+	ximg, err := xgraphics.NewDrawable(X, xproto.Drawable(X.RootWin()))
+	if err != nil {
+		log.Fatal(err)
+	}
+	// Shows the screenshot in a window.
+	ximg.XShowExtra("Screenshot", !true)
+
+	// If you'd like to save it as a png, use:
+	err = ximg.SavePng("screenshot.png")
+	if err != nil {
+		log.Fatal(err)
+	}
+	// fmt.Println(X.TimeGet())
+	xevent.Main(X)
+	// fmt.Println(X.TimeGet())
 }
