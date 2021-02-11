@@ -1,5 +1,6 @@
-package main
+package show_help
 
+// Option this is option
 var Option struct {
 	help   bool `short:"h" long:"help" discription:"this is help"`
 	window bool `short:"w" long:"window" discription:"capture window"`
