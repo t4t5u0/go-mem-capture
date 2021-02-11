@@ -1,4 +1,4 @@
-package show_help
+package lib
 
 // Option this is option
 var Option struct {

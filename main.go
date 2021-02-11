@@ -1,6 +1,7 @@
 package main
 
 import (
+	"go-shutter/lib"
 	"os/exec"
 	"time"
 
@@ -9,7 +10,7 @@ import (
 
 func main() {
 	// f := flag.
-	flags.Parse(&Option)
+	flags.Parse(&lib.Option)
 	// if err != nil {
 	// 	log.Fatal(err)
 	// }
