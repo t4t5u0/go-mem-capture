@@ -36,7 +36,7 @@ func main() {
 	} else if wFlag {
 		fmt.Println()
 		// アクティブウィンドウをキャプチャ
-		// xdotoop getactivewindow で id を持ってくる必要あり
+		// xdotool getactivewindow で id を持ってくる必要あり
 		cmd = exec.Command("maim", "-B", "-i", filepath+filename+filetype)
 	} else if aFlag {
 
