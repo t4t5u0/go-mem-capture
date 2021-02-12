@@ -4,42 +4,35 @@ import (
 	"fmt"
 	"go-shutter/lib"
 	"os/exec"
-	"time"
 
 	flags "github.com/jessevdk/go-flags"
 )
 
 func main() {
-	// f := flag.
 	args, _ := flags.Parse(&lib.Option)
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
 	var (
 		cmd   *exec.Cmd
 		wFlag bool = contains(args, "--widnow") || contains(args, "-w")
 		aFlag bool = contains(args, "--area") || contains(args, "-a")
-		cFlag bool = contains(args, "--copy") || contains(args, "-c")
+		cFlag bool = contains(args, "--clipboard") || contains(args, "-c")
 	)
-	filepath := "./img/"
-	filename := time.Now().Format("20060102150405")
-	filetype := ".png"
+	// filepath := "./img/"
+	fn := lib.Filename()
 	fmt.Println(args)
 	if contains(args, "--help") || contains(args, "-h") {
 		return
 	}
 	if len(args) == 0 {
 		// デフォルト。スクリーン全体を取得する
-		cmd = exec.Command("maim", filepath+filename+filetype)
+		cmd = lib.FullScreen(fn)
 	} else if wFlag && aFlag {
 		// このパラメータ指定は不正
 	} else if wFlag {
-		fmt.Println()
 		// アクティブウィンドウをキャプチャ
 		// xdotool getactivewindow で id を持ってくる必要あり
-		cmd = exec.Command("maim", "-B", "-i", filepath+filename+filetype)
+		cmd = lib.WindowScreen(fn)
 	} else if aFlag {
-
+		cmd = lib.AreaScreen(fn)
 	}
 
 	if cFlag {
