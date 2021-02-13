@@ -16,11 +16,12 @@ func main() {
 		aFlag bool = contains(args, "--area") || contains(args, "-a")
 		cFlag bool = contains(args, "--clipboard") || contains(args, "-c")
 		dFlag bool = contains(args, "--delay") || contains(args, "-d")
+		hFlag bool = contains(args, "--help") || contains(args, "-h")
 	)
 	// filepath := "./img/"
 	fn := lib.Filename()
 	fmt.Println(args)
-	if contains(args, "--help") || contains(args, "-h") {
+	if hFlag {
 		return
 	}
 	if len(args) == 0 {
@@ -35,14 +36,14 @@ func main() {
 	} else if aFlag {
 		cmd = lib.AreaScreen(fn)
 	}
+	if dFlag {
+		// n秒ディレイ
+	}
 
 	if cFlag {
 		// クリップボードにコピー
 	}
 	// cmd := exec.Command("maim", filepath+filename+filetype)
-	if dFlag {
-		// n秒ディレイ
-	}
 	cmd.Start()
 	cmd.Output()
 
