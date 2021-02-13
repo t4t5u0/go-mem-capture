@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"go-shutter/lib"
 	"os/exec"
 
@@ -20,7 +19,7 @@ func main() {
 	)
 	// filepath := "./img/"
 	fn := lib.Filename()
-	fmt.Println(args)
+	// fmt.Println(args)
 	if hFlag {
 		return
 	}
@@ -42,10 +41,14 @@ func main() {
 
 	if cFlag {
 		// クリップボードにコピー
+		// xclip -se c -t image/png
+		clip := exec.Command("xclip", "-se", "c", "-t", "image/png")
+		clip.Stdin, _ = cmd.StdoutPipe()
+		clip.Run()
 	}
 	// cmd := exec.Command("maim", filepath+filename+filetype)
 	cmd.Start()
-	cmd.Output()
+	// cmd.Output()
 
 }
 
