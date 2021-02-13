@@ -15,6 +15,7 @@ func main() {
 		wFlag bool = contains(args, "--widnow") || contains(args, "-w")
 		aFlag bool = contains(args, "--area") || contains(args, "-a")
 		cFlag bool = contains(args, "--clipboard") || contains(args, "-c")
+		dFlag bool = contains(args, "--delay") || contains(args, "-d")
 	)
 	// filepath := "./img/"
 	fn := lib.Filename()
@@ -39,7 +40,9 @@ func main() {
 		// クリップボードにコピー
 	}
 	// cmd := exec.Command("maim", filepath+filename+filetype)
-
+	if dFlag {
+		// n秒ディレイ
+	}
 	cmd.Start()
 	cmd.Output()
 
